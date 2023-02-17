@@ -44,6 +44,7 @@ form input[type="text"] {
 form input[type="submit"] {
   flex-basis: 25%;
   background-color: #1dd2af;
+  cursor: pointer;
 }
 
 .to-do-list {
@@ -52,6 +53,7 @@ form input[type="submit"] {
 }
 
 .list-item {
+  padding: 0 10px;
   color: #fff;
   font-size: 1.2em;
   min-height: 50px;
@@ -60,12 +62,22 @@ form input[type="submit"] {
   align-items: center;
 }
 
+.list-item input[type="radio"] {
+  width: 15px;
+  height: 15px;
+}
+
 .list-item input:checked span {
   text-decoration: line-through;
-  color: red;
+  color: rgb(255, 73, 67);
 }
 
 .list-item span {
   margin-left: 10px;
   margin-right: auto;
+}
+
+.list-item i {
+  cursor: pointer;
+  color: rgb(255, 73, 67);
 }
