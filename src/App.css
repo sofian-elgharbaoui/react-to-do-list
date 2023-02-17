@@ -1,38 +1,71 @@
-.App {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 50px 20px 10px;
+  font-family: "Rajdhani";
+}
+
+#root {
+  max-width: 30em;
+  margin: auto;
   text-align: center;
+  border-radius: 1em;
+  overflow: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-title {
+  background-color: #de3f53;
+  color: #fff;
+  font-size: 3em;
+  padding: 0.5em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+form {
   display: flex;
-  flex-direction: column;
+}
+
+form input {
+  color: beige;
+  padding: 10px;
+  font-size: 1.5em;
+  border: none;
+  outline: none;
+}
+
+form input[type="text"] {
+  flex-basis: 75%;
+  background-color: #3c4979;
+}
+
+form input[type="submit"] {
+  flex-basis: 25%;
+  background-color: #1dd2af;
+}
+
+.to-do-list {
+  background-color: #262e4c;
+  min-height: 50px;
+}
+
+.list-item {
+  color: #fff;
+  font-size: 1.2em;
+  min-height: 50px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.list-item input:checked span {
+  text-decoration: line-through;
+  color: red;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.list-item span {
+  margin-left: 10px;
+  margin-right: auto;
 }
