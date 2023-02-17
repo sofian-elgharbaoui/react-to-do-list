@@ -1,35 +1,54 @@
 import { useState } from "react";
 import "./App.css";
 
-function CreactTask() {
+function CreactTask({ tasks, setTasks }) {
+  const [userInput, setUserInput] = useState("");
+
+  function handleFormSbmit(e) {
+    e.preventDefault();
+
+    let newTask = { taskName: userInput, checked: false };
+
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+
+    setUserInput("");
+  }
+
   return (
-    <form>
-      <input type="text" placeholder="Add task" />
+    <form onSubmit={(e) => handleFormSbmit(e)}>
+      <input
+        type="text"
+        placeholder="Add task"
+        value={userInput}
+        onChange={(e) => setUserInput(e.target.value)}
+      />
       <input type="submit" />
     </form>
   );
 }
-// {listItems}
-function TasksList() {
-  return (
-    <ul className="to-do-list">
-      <li className="list-item">
-        <input type="checkbox" checked={false} /> <span>hello</span>{" "}
-        <i class="fa-regular fa-trash-can"></i>
+
+function TasksList({ tasks }) {
+  function handleRemoveTask() {}
+  let newTasks = tasks.map((task, i) => {
+    return (
+      <li className="list-item" key={i}>
+        <input type="radio" checked={task.checked} />
+        <span>{task.taskName}</span>{" "}
+        <i class="fa-regular fa-trash-can" onClick={handleRemoveTask()}></i>
       </li>
-    </ul>
-  );
+    );
+  });
+
+  return <ul className="to-do-list">{newTasks}</ul>;
 }
 
-// function ToDoList() {
-//   return <></>;
-// }
 export default function App() {
+  const [tasks, setTasks] = useState([]);
   return (
-    <div>
+    <>
       <h2 className="app-title">TO-DO LIST</h2>
-      <CreactTask />
-      <TasksList />
-    </div>
+      <CreactTask tasks={tasks} setTasks={setTasks} />
+      <TasksList tasks={tasks} />
+    </>
   );
 }
