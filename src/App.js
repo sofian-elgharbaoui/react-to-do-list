@@ -1,16 +1,31 @@
 import { useState } from "react";
 import "./App.css";
 
+function Task({ task, i, handleRemoveTask, handleRadioChange }) {
+  return (
+    <li className="list-item" key={i}>
+      <input
+        type="checkbox"
+        checked={task.checked}
+        onChange={handleRadioChange}
+      />
+      <span>{task.taskName}</span>{" "}
+      <i className="fa-regular fa-trash-can" onClick={handleRemoveTask}></i>
+    </li>
+  );
+}
+
 function CreactTask({ tasks, setTasks }) {
   const [userInput, setUserInput] = useState("");
 
   function handleFormSbmit(e) {
     e.preventDefault();
-
     let newTask = { taskName: userInput, checked: false };
 
-    setTasks((prevTasks) => [...prevTasks, newTask]);
+    const newTasks = [newTask, ...tasks];
+    localStorage.setItem("tasks", JSON.stringify(newTasks));
 
+    setTasks(newTasks);
     setUserInput("");
   }
 
@@ -22,20 +37,39 @@ function CreactTask({ tasks, setTasks }) {
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
       />
-      <input type="submit" />
+      <input type="submit" value="Add task" />
     </form>
   );
 }
 
-function TasksList({ tasks }) {
-  function handleRemoveTask() {}
-  let newTasks = tasks.map((task, i) => {
+function TasksList({ tasks, setTasks }) {
+  function handleRemoveTask(i) {
+    const newTasks = [...tasks];
+    newTasks.splice(i, 1);
+
+    localStorage.setItem("tasks", JSON.stringify(newTasks));
+    setTasks(newTasks);
+  }
+
+  function handleRadioChange(index) {
+    const newTasks = [...tasks];
+    newTasks[index] = {
+      ...newTasks[index],
+      checked: !newTasks[index].checked,
+    };
+    localStorage.setItem("tasks", JSON.stringify(newTasks));
+    setTasks(tasks);
+  }
+
+  const newTasks = [...tasks].map((task, i) => {
     return (
-      <li className="list-item" key={i}>
-        <input type="radio" checked={task.checked} />
-        <span>{task.taskName}</span>{" "}
-        <i class="fa-regular fa-trash-can" onClick={handleRemoveTask()}></i>
-      </li>
+      <Task
+        task={task}
+        i={i}
+        setTasks={setTasks}
+        handleRadioChange={() => handleRadioChange(i)}
+        handleRemoveTask={() => handleRemoveTask(i)}
+      />
     );
   });
 
@@ -43,12 +77,14 @@ function TasksList({ tasks }) {
 }
 
 export default function App() {
-  const [tasks, setTasks] = useState([]);
+  const tasksArr = JSON.parse(localStorage.getItem("tasks")) || [];
+  const [tasks, setTasks] = useState(tasksArr);
+
   return (
     <>
       <h2 className="app-title">TO-DO LIST</h2>
       <CreactTask tasks={tasks} setTasks={setTasks} />
-      <TasksList tasks={tasks} />
+      <TasksList tasks={tasks} setTasks={setTasks} />
     </>
   );
 }

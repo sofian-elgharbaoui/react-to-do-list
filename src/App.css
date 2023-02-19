@@ -62,12 +62,13 @@ form input[type="submit"] {
   align-items: center;
 }
 
-.list-item input[type="radio"] {
+.list-item input[type="checkbox"] {
   width: 15px;
   height: 15px;
+  background-color: #1dd2af;
 }
 
-.list-item input:checked span {
+.list-item input:checked + span {
   text-decoration: line-through;
   color: rgb(255, 73, 67);
 }
